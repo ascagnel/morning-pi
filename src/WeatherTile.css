@@ -1,0 +1,37 @@
+.HourWrapper {
+    width: 100px;
+    max-height: 160px;
+    text-align: center;
+    padding: 10px;
+}
+
+.HourImage {
+    width: 80px;
+    height: 80px;
+}
+
+.HourLabel {
+    font-weight: bold;
+}
+
+.HourSummary {
+    font-size: 14px;
+}
+
+.WeatherSummary {
+    text-align: center;
+}
+
+.WeatherWrapper {
+    width: 410px;
+    max-width: 410px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+
+.WeatherFlexWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
