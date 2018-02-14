@@ -1,0 +1,14 @@
+{
+    "mapsApiKey": "https://developers.google.com/maps/documentation/directions/ key",
+    "darkSkyApiKey": "https://darksky.net/dev key",
+    "timeout": 60000,
+    "weatherTimeout": 60000,
+    "homeLocation": "latitude,longitude",
+    "destinations": [
+        {
+            "title": "Display title for destination",
+            "param": "latitude,longitude",
+            "expected": "expected travel time in seconds as int"
+        }
+    ]
+}

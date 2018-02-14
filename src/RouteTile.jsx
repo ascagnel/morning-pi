@@ -4,7 +4,7 @@ import './RouteTile.css';
 import qs from 'qs';
 import get from 'lodash.get';
 
-import { mapsApiKey, timeout, homeLocation, googleEndoint } from './config.json';
+import { mapsApiKey, timeout, homeLocation } from './config.json';
 
 class RouteTile extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class RouteTile extends Component {
             callParams['transit_mode'] = 'bus|subway'
         }
 
-        const lookupPath = `${googleEndoint}?${qs.stringify(callParams, { encode: false })}`;
+        const lookupPath = `/maps/api/directions/json?${qs.stringify(callParams, { encode: false })}`;
 
         this.state = {
             travelTime: null,
