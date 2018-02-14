@@ -2,7 +2,8 @@ Documentation WIP.
 
 Quick start:
 
-* `yarn start`
-* `yarn dev`
+* create a ./src/config.json file
+* `yarn start` (for proxying service calls)
+* `yarn dev` (to run the app)
 
 This was generated with create-react-app, and hasn't been ejected yet.
