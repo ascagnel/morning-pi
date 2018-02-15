@@ -16,4 +16,6 @@ app.use('/forecast', proxy('https://api.darksky.net', {
     }
 }));
 
+app.use(express.static('build'));
+
 app.listen(process.env.PORT || 3001, () => console.log(`App running on ${process.env.PORT || 3001}!`));
