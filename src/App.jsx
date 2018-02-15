@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import get from 'lodash.get';
 import './App.css';
 
 import RouteTile from './RouteTile';
 import WeatherTile from './WeatherTile';
 
-import { destinations } from './config.json';
+const destinations = get(window.SERVER_DATA, 'destinations') || [];
 
 class App extends Component {
   render() {

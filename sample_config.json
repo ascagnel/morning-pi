@@ -1,8 +1,4 @@
 {
-    "mapsApiKey": "https://developers.google.com/maps/documentation/directions/ key",
-    "darkSkyApiKey": "https://darksky.net/dev key",
-    "timeout": 60000,
-    "weatherTimeout": 60000,
     "homeLocation": "latitude,longitude",
     "destinations": [
         {
