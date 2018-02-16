@@ -70,6 +70,7 @@ class WeatherTile extends Component {
 			apiEndpoint,
 			summary: '',
 			hours: [],
+			lastUpdate: null,
 		};
 
 		this.updateContent = this.updateContent.bind(this);
@@ -107,16 +108,21 @@ class WeatherTile extends Component {
 
 		const summary = get(result, 'hourly.summary');
 		const hours = (get(result, 'hourly.data') || []).slice(0, 9);
-		this.setState({ summary, hours });
+		this.setState({ summary, hours, lastUpdate: new Date() });
 	}
 
 	render() {
+		let dateDisplay = 'Never';
+		if (this.state.lastUpdate) {
+			dateDisplay = this.state.lastUpdate.toTimeString() + '';
+		}
 		return (
 			<div className="WeatherWrapper">
 				<div className="WeatherFlexWrapper">
 					{this.state.hours.map((hour, index) => <WeatherHour key={`hour-${index}`} {...hour} />)}
 				</div>
 				<div className="WeatherSummary">{this.state.summary}</div>
+				<div className="LastUpdate">Last Updated: {dateDisplay}</div>
 			</div>
 		);
 	}

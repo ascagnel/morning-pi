@@ -55,3 +55,8 @@
 	flex-grow: 2;
 	flex-shrink: 2;
 }
+
+.LastUpdate {
+	font-size: 10px;
+	text-align: right;
+}

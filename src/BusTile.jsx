@@ -8,6 +8,7 @@ class BusTile extends Component {
 		super(props);
 		this.state = {
 			timer: null,
+			lastUpdate: null,
 			buses: [],
 		};
 		this.updateContent = this.updateContent.bind(this);
@@ -55,7 +56,7 @@ class BusTile extends Component {
 				nextTime: get(bus, 'nextbusonroutetime.0'),
 			};
 		});
-		this.setState({ buses });
+		this.setState({ buses, lastUpdate: new Date() });
 	}
 
 	render() {
@@ -72,10 +73,16 @@ class BusTile extends Component {
 				</div>
 			);
 		}
+
+		let dateDisplay = 'Never';
+		if (this.state.lastUpdate) {
+			dateDisplay = this.state.lastUpdate.toTimeString() + '';
+		}
 		return (
 			<div>
 				<h2>Buses Arriving at {this.props.title}</h2>
 				{body}
+				<div className="LastUpdate">Last Updated: {dateDisplay}</div>
 			</div>
 		);
 	}

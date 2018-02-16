@@ -26,6 +26,7 @@ class RouteTile extends Component {
 			isLoading: true,
 			lookupPath,
 			displayAllowExtra: false,
+			lastUpdate: null,
 			timer: null,
 		};
 
@@ -73,6 +74,7 @@ class RouteTile extends Component {
 			isLoading: false,
 			travelTime,
 			displayAllowExtra: travelValue >= this.props.expected,
+			lastUpdate: new Date(),
 		});
 	}
 
@@ -90,10 +92,16 @@ class RouteTile extends Component {
 			travelTimeDisplay = <div className="TimeDisplay">{this.state.travelTime}</div>;
 		}
 
+		let dateDisplay = 'Never';
+		if (this.state.lastUpdate) {
+			dateDisplay = this.state.lastUpdate.toTimeString() + '';
+		}
+
 		return (
 			<div className="RouteItemWrapper">
 				<h2>{this.props.title}</h2>
 				{travelTimeDisplay}
+				<div className="LastUpdate">Last Updated: {dateDisplay}</div>
 			</div>
 		);
 	}
