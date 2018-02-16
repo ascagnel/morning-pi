@@ -4,14 +4,12 @@ import './RouteTile.css';
 import qs from 'qs';
 import get from 'lodash.get';
 
-const homeLocation = get(window.SERVER_DATA, 'homeLocation');
-
 class RouteTile extends Component {
     constructor(props) {
         super(props);
 
         const callParams = {
-            origin: homeLocation,
+            origin: props.homeLocation,
             destination: props.param,
             method: props.method || 'driving',
             key: '$KEY',

@@ -18,8 +18,6 @@ import thunderstorm from './icons/thunderstorm.svg';
 import tornado from './icons/tornado.svg';
 import fallback from './icons/error.svg';
 
-const homeLocation = get(window.SERVER_DATA, 'homeLocation');
-
 const ICON_MAP = {
     'clear-day': clearDay,
     'clear-night': clearNight,
@@ -64,7 +62,7 @@ class WeatherTile extends Component {
     constructor(props) {
         super(props);
 
-        const apiEndpoint = `/forecast/$KEY/${homeLocation}`;
+        const apiEndpoint = `/forecast/$KEY/${props.homeLocation}`;
 
         this.state = {
             isLoading: true,

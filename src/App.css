@@ -1,7 +1,11 @@
 .App {
     display: flex;
-    width: 780px;
-    height: 460px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
     padding: 10px;
     flex-direction: column;
 }
