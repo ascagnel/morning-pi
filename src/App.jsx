@@ -17,16 +17,30 @@ class App extends Component {
 			loaded: false,
 			homeLocation: null,
 			destinations: [],
+			timer: null,
+			currentDate: null,
 		};
+		this.updateDate = this.updateDate.bind(this);
 	}
 
 	async componentWillMount() {
 		const response = await fetch('/data');
+		const timer = window.setInterval(this.updateDate, 200);
 
 		if (response.ok) {
 			const config = await response.json();
-			this.setState(Object.assign({}, config, { loaded: true }));
+			this.setState(Object.assign({}, config, { loaded: true, timer, currentDate: new Date() }));
 		}
+	}
+
+	componentWillUnmount() {
+		if (this.state.timer) {
+			window.clearInterval(this.state.timer);
+		}
+	}
+
+	updateDate() {
+		this.setState({ currentDate: new Date() });
 	}
 
 	render() {
@@ -35,7 +49,9 @@ class App extends Component {
 		}
 		return (
 			<div className="App">
-				<div className="AppDate">Today's Date</div>
+				<div className="AppDate">
+					{this.state.currentDate ? this.state.currentDate.toDateString() + '' : 'Right Now'}
+				</div>
 				<div className="AppMain">
 					<div className="RouteWrapper">
 						{(this.state.destinations || []).map((destination, index) => {
