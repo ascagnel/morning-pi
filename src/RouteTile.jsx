@@ -4,17 +4,15 @@ import './RouteTile.css';
 import qs from 'qs';
 import get from 'lodash.get';
 
-import { mapsApiKey, timeout, homeLocation } from './config.json';
-
 class RouteTile extends Component {
     constructor(props) {
         super(props);
 
         const callParams = {
-            origin: homeLocation,
+            origin: props.homeLocation,
             destination: props.param,
             method: props.method || 'driving',
-            key: mapsApiKey,
+            key: '$KEY',
         };
 
         if (props.method === 'transit') {
@@ -37,7 +35,7 @@ class RouteTile extends Component {
     componentWillMount() {
         const timer = window.setInterval(() => {
             this.updateDisplay();
-        }, timeout || 6000);
+        }, 300000);
 
         this.setState({ timer });
         this.updateDisplay();

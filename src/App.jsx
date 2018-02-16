@@ -4,24 +4,45 @@ import './App.css';
 import RouteTile from './RouteTile';
 import WeatherTile from './WeatherTile';
 
-import { destinations } from './config.json';
-
 class App extends Component {
-  render() {
-    return (
-        <div className="App">
-            <div className="AppDate">Today's Date</div>
-            <div className="AppMain">
-                <div className="RouteWrapper">
-                    {(destinations || []).map((destination, index) => (
-                        <RouteTile key={`destination-${index}`} {...destination} />
-                    ))}
+    constructor(props) {
+        super(props);
+        this.state = {
+            loaded: false,
+            homeLocation: null,
+            destinations: []
+        };
+    }
+
+    async componentWillMount() {
+        const response = await fetch('/data');
+
+        if (response.ok) {
+            const config = await response.json();
+            this.setState(Object.assign({}, config, { loaded: true }));
+        }
+    }
+
+    render() {
+        if (!this.state.loaded) {
+            return <div>Loading...</div>;
+        }
+        return (
+            <div className="App">
+                <div className="AppDate">
+                    Today's Date
                 </div>
-                <WeatherTile />
+                <div className="AppMain">
+                    <div className="RouteWrapper">
+                        {(this.state.destinations || []).map((destination, index) => (
+                            <RouteTile key={`destination-${index}`} homeLocation={this.state.homeLocation} {...destination} />
+                        ))}
+                    </div>
+                    <WeatherTile homeLocation={this.state.homeLocation} />
+                </div>
             </div>
-        </div>
-    );
-  }
+        );
+    }
 }
 
 export default App;

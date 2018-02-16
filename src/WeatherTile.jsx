@@ -3,8 +3,6 @@ import get from 'lodash.get';
 
 import './WeatherTile.css';
 
-import { darkSkyApiKey, homeLocation, weatherTimeout } from './config.json';
-
 import clearDay from './icons/clearDay.svg';
 import clearNight from './icons/clearNight.svg';
 import rain from './icons/rain.svg';
@@ -64,7 +62,7 @@ class WeatherTile extends Component {
     constructor(props) {
         super(props);
 
-        const apiEndpoint = `/forecast/${darkSkyApiKey}/${homeLocation}`;
+        const apiEndpoint = `/forecast/$KEY/${props.homeLocation}`;
 
         this.state = {
             isLoading: true,
@@ -78,7 +76,7 @@ class WeatherTile extends Component {
     }
 
     componentWillMount() {
-        const timer = window.setInterval(this.updateContent, weatherTimeout);
+        const timer = window.setInterval(this.updateContent, 300000);
         this.setState({ timer });
         this.updateContent();
     }

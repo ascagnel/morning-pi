@@ -1,20 +1,32 @@
-var express = require('express');
-var proxy = require('express-http-proxy');
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const proxy = require('express-http-proxy');
+const dotenv = require('dotenv');
 
-var app = express();
+const app = express();
+dotenv.config();
 
 app.use('/maps', proxy('https://maps.googleapis.com', {
     https: true,
-    proxyReqPathResolver: function(req) {
-        return `/maps${req.url}`;
-    }
+    proxyReqPathResolver: req => `/maps${req.url.replace('$KEY', process.env.MAPS_API_KEY)}`
 }));
+
 app.use('/forecast', proxy('https://api.darksky.net', {
     https: true,
-    proxyReqPathResolver: function(req) {
-        return `/forecast${req.url}`;
-    }
+    proxyReqPathResolver: req => `/forecast${req.url.replace('$KEY', process.env.DARK_SKY_API_KEY)}`
 }));
+
+app.use('/data', (req, res) => {
+    fs.readFile(path.join(__dirname, './config.json'), { encoding: 'utf8' }, (err, data) => {
+        if (err) {
+            throw err;
+        }
+
+        const config = JSON.parse(data);
+        res.json(config);
+    });
+});
 
 app.use(express.static('build'));
 
