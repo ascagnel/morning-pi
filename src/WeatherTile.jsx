@@ -34,7 +34,7 @@ const ICON_MAP = {
 	tornado: tornado,
 };
 
-const WeatherHour = ({ time, summary, icon }) => {
+const WeatherHour = ({ time, summary, icon, temperature }) => {
 	const currentHour = new Date(time * 1000).getHours();
 	let displayHour = currentHour;
 	if (currentHour === 0) {
@@ -48,10 +48,13 @@ const WeatherHour = ({ time, summary, icon }) => {
 	}
 
 	const displayIcon = ICON_MAP[icon] || fallback;
+	const displayTemp = `${Math.round(temperature)}F`;
 
 	return (
 		<div className="HourWrapper">
-			<div className="HourLabel">{displayHour}</div>
+			<div className="HourLabel">
+				{displayHour}&nbsp;-&nbsp;{displayTemp}
+			</div>
 			<img className="HourImage" src={displayIcon} alt={summary} />
 			<div className="HourSummary">{summary}</div>
 		</div>
