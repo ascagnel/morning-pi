@@ -12,6 +12,8 @@ class RouteTile extends Component {
 			origin: props.homeLocation,
 			destination: props.param,
 			method: props.method || 'driving',
+			traffic_model: 'pessimistic',
+			departure_time: Date.now() + 30000,
 			key: '$KEY',
 		};
 
@@ -23,6 +25,7 @@ class RouteTile extends Component {
 
 		this.state = {
 			travelTime: null,
+			travelDestination: null,
 			isLoading: true,
 			lookupPath,
 			displayAllowExtra: false,
@@ -67,12 +70,14 @@ class RouteTile extends Component {
 			return;
 		}
 
-		const travelTime = get(result, 'routes.0.legs.0.duration.text') || '0 mins';
+		const travelTime = get(result, 'routes.0.legs.0.duration_in_traffic.text') || '0 mins';
+		const travelDestination = get(result, 'routes.0.legs.0.end_address');
 		const travelValue = get(result, 'routes.0.legs.0.duration.value') || 0;
 
 		this.setState({
 			isLoading: false,
-			travelTime,
+			travelTime: travelDestination ? `${travelTime} to ${travelDestination}` : travelTime,
+			travelDestination,
 			displayAllowExtra: travelValue >= this.props.expected,
 			lastUpdate: new Date(),
 		});
