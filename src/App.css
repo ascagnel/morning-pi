@@ -1,6 +1,8 @@
 .App {
 	display: flex;
 	position: absolute;
+	background: black;
+	color: white;
 	top: 0;
 	left: 0;
 	right: 0;

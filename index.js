@@ -6,6 +6,25 @@ const dotenv = require('dotenv');
 const fetch = require('isomorphic-fetch');
 const { parseString } = require('xml2js');
 
+const LOG_LEVELS = {
+    DEBUG: 'log',
+    INFO: 'info',
+    ERROR: 'error',
+};
+
+const log = (level, string, error) => {
+    const levels = Object.values(LOG_LEVELS);
+    const logLevel = levels.indexOf(process.env.LOG_LEVEL || LOG_LEVELS.INFO);
+    const targetLevel = levels.indexOf(level);
+
+    const time = new Date();
+    string = `${time}: ${string}`;
+
+    if (targetLevel >= logLevel) {
+        error ? console.error(string, error) : console.log(string);
+    }
+};
+
 const app = express();
 dotenv.config();
 
@@ -21,6 +40,7 @@ app.use('/forecast', proxy('https://api.darksky.net', {
 
 app.use('/bus', async (req, res) => {
     const stop = parseInt(req.query.stop);
+    log(LOG_LEVELS.INFO, `Fetching data for bus stop '${stop}'`);
     const path = `http://mybusnow.njtransit.com/bustime/eta/getStopPredictionsETA.jsp?route=all&stop=${req.query.stop}&key=${Math.random()}`;
 
     const response = await fetch(path);
@@ -32,15 +52,16 @@ app.use('/bus', async (req, res) => {
         const result = await response.text();
         parseString(result, (err, jsonString) => {
             if (err) {
-                console.error('Could not parse result XML', err);
+                log(LOG_LEVELS.ERROR, 'Could not parse result XML', err);
                 res.send(500);
                 return;
             }
+            log(LOG_LEVELS.DEBUG, `NJT result: ${jsonString}`);
             res.json(jsonString);
         });
     } catch (e) {
-        console.error('Could not parse response', e);
-        res.send(500);
+        log(LOG_LEVELS.ERROR, 'Could not parse response', e);
+        res.sendStatus(500);
     }
 });
 
@@ -57,4 +78,4 @@ app.use('/data', (req, res) => {
 
 app.use(express.static('build'));
 
-app.listen(process.env.PORT || 3001, () => console.log(`App running on ${process.env.PORT || 3001}!`));
+app.listen(process.env.PORT || 3001, () => log(LOG_LEVELS.INFO, `App running on ${process.env.PORT || 3001}!`));

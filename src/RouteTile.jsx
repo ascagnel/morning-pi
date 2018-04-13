@@ -25,7 +25,6 @@ class RouteTile extends Component {
 
 		this.state = {
 			travelTime: null,
-			travelDestination: null,
 			isLoading: true,
 			lookupPath,
 			displayAllowExtra: false,
@@ -77,7 +76,6 @@ class RouteTile extends Component {
 		this.setState({
 			isLoading: false,
 			travelTime: travelDestination ? `${travelTime} to ${travelDestination}` : travelTime,
-			travelDestination,
 			displayAllowExtra: travelValue >= this.props.expected,
 			lastUpdate: new Date(),
 		});
