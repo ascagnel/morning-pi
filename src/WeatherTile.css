@@ -8,6 +8,8 @@
 .HourImage {
 	width: 80px;
 	height: 80px;
+	fill: white !important;
+	stroke: white !important;
 }
 
 .HourLabel {

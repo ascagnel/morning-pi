@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SVG from 'react-inlinesvg';
 import get from 'lodash.get';
 
 import './WeatherTile.css';
@@ -55,7 +56,7 @@ const WeatherHour = ({ time, summary, icon, temperature }) => {
 			<div className="HourLabel">
 				{displayHour}&nbsp;-&nbsp;{displayTemp}
 			</div>
-			<img className="HourImage" src={displayIcon} alt={summary} />
+			<SVG src={displayIcon} alt={summary} className="HourImage" />
 			<div className="HourSummary">{summary}</div>
 		</div>
 	);

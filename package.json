@@ -14,6 +14,7 @@
     "qs": "^6.5.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-inlinesvg": "^0.8.1",
     "react-scripts": "1.1.1",
     "xml2js": "^0.4.19"
   },
